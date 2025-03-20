@@ -334,7 +334,6 @@
 
 
 
-
 <!-- TABLE UPADTED LIST  -->
 <mvc:View
     controllerName="com.tableentry.tablestructure.controller.Table_Entry"
