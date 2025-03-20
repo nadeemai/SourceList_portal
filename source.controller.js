@@ -49,6 +49,62 @@ sap.ui.define([
             oData.allCount = aItems.length;
         },
 
+        _applyFilters: function () {
+            var oTable = this.byId("productsTable");
+            var oBinding = oTable.getBinding("items");
+            var aFilters = [];
+
+            // Supplier ID Filter
+            var sSupplierId = this.byId("supplierIdInput").getValue();
+            if (sSupplierId) {
+                aFilters.push(new Filter("supplierRequestId", FilterOperator.Contains, sSupplierId));
+            }
+
+            // Supplier Type Filter
+            var sSupplierType = this.byId("supplierTypeComboBox").getSelectedKey();
+            if (sSupplierType && sSupplierType !== "All") {
+                aFilters.push(new Filter("type", FilterOperator.EQ, sSupplierType));
+            }
+
+            // Stage Filter
+            var sStage = this.byId("stageComboBox").getSelectedKey();
+            if (sStage && sStage !== "All") {
+                aFilters.push(new Filter("stage", FilterOperator.EQ, sStage));
+            }
+
+            // Status Filter
+            var sStatus = this.byId("statusComboBox").getSelectedKey();
+            if (sStatus && sStatus !== "All") {
+                aFilters.push(new Filter("status", FilterOperator.EQ, sStatus));
+            }
+
+            // Apply combined filters
+            if (aFilters.length > 0) {
+                oBinding.filter(new Filter({
+                    filters: aFilters,
+                    and: true
+                }));
+            } else {
+                oBinding.filter([]);
+            }
+        },
+
+        onSupplierIdChange: function (oEvent) {
+            this._applyFilters();
+        },
+
+        onSupplierTypeChange: function (oEvent) {
+            this._applyFilters();
+        },
+
+        onStageChange: function (oEvent) {
+            this._applyFilters();
+        },
+
+        onStatusChange: function (oEvent) {
+            this._applyFilters();
+        },
+
         onSort: function () {
             var oTable = this.byId("productsTable");
             var oBinding = oTable.getBinding("items");
@@ -61,32 +117,6 @@ sap.ui.define([
 
             oBinding.sort(oSorter);
             MessageToast.show(`Sorted by ${this._sCurrentSortField} ${this._bDescendingSort ? "Descending" : "Ascending"}`);
-        },
-
-        onStageChange: function (oEvent) {
-            var sKey = oEvent.getParameter("selectedItem").getKey();
-            var oTable = this.byId("productsTable");
-            var oBinding = oTable.getBinding("items");
-            var aFilters = [];
-
-            if (sKey !== "All") {
-                aFilters.push(new Filter("stage", FilterOperator.EQ, sKey));
-            }
-
-            oBinding.filter(aFilters);
-        },
-
-        onStatusChange: function (oEvent) {
-            var sKey = oEvent.getParameter("selectedItem").getKey();
-            var oTable = this.byId("productsTable");
-            var oBinding = oTable.getBinding("items");
-            var aFilters = [];
-
-            if (sKey !== "All") {
-                aFilters.push(new Filter("status", FilterOperator.EQ, sKey));
-            }
-
-            oBinding.filter(aFilters);
         },
 
         onTilePress: function (oEvent) {
@@ -106,44 +136,80 @@ sap.ui.define([
                 aFilters.push(new Filter("stage", FilterOperator.EQ, "ON BOARDING"));
             } else if (sTileId.includes("allTile")) {
                 oBinding.filter([]);
+                this.byId("supplierIdInput").setValue("");
+                this.byId("supplierTypeComboBox").setSelectedKey("All");
+                this.byId("stageComboBox").setSelectedKey("All");
+                this.byId("statusComboBox").setSelectedKey("All");
                 return;
             }
 
             oBinding.filter(aFilters);
-        },
-
-        onCountryProfitPress: function () {
-            MessageToast.show("Country-Specific Profit Margin tile pressed!");
-        },
-
-        onTableSelectionChange: function (oEvent) {
-            var oSelectedItem = oEvent.getParameter("listItem");
-            if (oSelectedItem) {
-                var oContext = oSelectedItem.getBindingContext("products");
-                var oData = oContext.getObject();
-                var oDetailLayout = this.byId("detailLayout");
-
-                oDetailLayout.removeAllContent();
-                oDetailLayout.addContent(new sap.m.Text({ text: "Supplier Request ID: " + oData.supplierRequestId }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Supplier Name: " + oData.supplierName }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Type: " + oData.type }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Request Creation Date: " + oData.requestCreationDate }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Request Aging: " + oData.requestAging }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Last Action Date: " + oData.lastActionDate }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Last Action Aging: " + oData.lastActionAging }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Stage: " + oData.stage }));
-                oDetailLayout.addContent(new sap.m.Text({ text: "Status: " + oData.status }));
-
-                this.byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
-            }
+            // Reset other filters when a tile is pressed
+            this.byId("supplierIdInput").setValue("");
+            this.byId("supplierTypeComboBox").setSelectedKey("All");
+            this.byId("stageComboBox").setSelectedKey("All");
+            this.byId("statusComboBox").setSelectedKey("All");
         },
 
         onOrderPress: function () {
-            MessageToast.show("New Supplier Request created successfully!");
+            // Get the current model
+            var oModel = this.getView().getModel("products");
+            var oData = oModel.getData();
+
+            // Generate a new supplier request ID (increment the last ID)
+            var aItems = oData.items;
+            var iLastId = parseInt(aItems[0].supplierRequestId.replace("R", ""), 10);
+            var sNewId = "R" + (iLastId + 1).toString().padStart(8, "0");
+
+            // Get the current date for requestCreationDate and lastActionDate
+            var oDate = new Date();
+            var sCurrentDate = oDate.getDate() + "-" + (oDate.getMonth() + 1) + "-" + oDate.getFullYear();
+
+            // Create a new supplier request
+            var oNewSupplier = {
+                supplierRequestId: sNewId,
+                supplierName: "New Supplier " + sNewId, // Example name
+                type: "Direct", // Default type
+                requestCreationDate: sCurrentDate,
+                requestAging: "0 Days", // New request, so aging is 0
+                lastActionDate: sCurrentDate,
+                lastActionAging: "0 Days", // New request, so aging is 0
+                stage: "SUPPLIER", // Default stage
+                status: "DRAFT" // Default status
+            };
+
+            // Add the new supplier to the items array
+            aItems.unshift(oNewSupplier); // Add to the beginning of the array
+
+            // Update tile counts
+            this._updateTileCounts(oData);
+
+            // Update the model
+            oModel.setData(oData);
+
+            // Refresh the table binding to reflect the new data
+            var oTable = this.byId("productsTable");
+            oTable.getBinding("items").refresh();
+
+            MessageToast.show("New Supplier Request created successfully! ID: " + sNewId);
+        },
+
+        onClearPress: function () {
+            // Reset all filter inputs
+            this.byId("supplierIdInput").setValue("");
+            this.byId("supplierTypeComboBox").setSelectedKey("All");
+            this.byId("stageComboBox").setSelectedKey("All");
+            this.byId("statusComboBox").setSelectedKey("All");
+
+            // Clear table filters
+            var oTable = this.byId("productsTable");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
+
+            MessageToast.show("Filters cleared!");
         }
     });
 });
-
 
 
 
