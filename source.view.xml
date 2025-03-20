@@ -165,3 +165,186 @@
         </f:midColumnPages>
     </f:FlexibleColumnLayout>
 </mvc:View>
+
+
+
+
+<!-- TABLE UPADTED LIST  -->
+<mvc:View
+    controllerName="com.tableentry.tablestructure.controller.Table_Entry"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core">
+
+    <f:FlexibleColumnLayout id="flexibleColumnLayout" layout="OneColumn">
+        <f:beginColumnPages>
+            <Page id="productsPage" title="Supplier Registration Dashboard">
+                <l:VerticalLayout id="_IDGenVerticalLayout" width="100%">
+                    <!-- Launch Tiles -->
+                    <l:Grid id="tileGrid" defaultSpan="XL2 L2 M4 S6" hSpacing="1" vSpacing="1">
+                        <l:content>
+                            <GenericTile id="draftTile" header="Draft" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1">
+                                    <NumericContent id="_IDGenNumericContent1" value="{products>/draftCount}" valueColor="Neutral" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile id="myPendingTile" header="My Pending Action" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent2">
+                                    <NumericContent id="_IDGenNumericContent2" value="{products>/myPendingCount}" valueColor="Neutral" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile id="pendingWithSupplierTile" header="Pending with Supplier" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent3">
+                                    <NumericContent id="_IDGenNumericContent3" value="{products>/pendingWithSupplierCount}" valueColor="Neutral" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile id="onBoardingTile" header="On-Boarding Stage" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent4">
+                                    <NumericContent id="_IDGenNumericContent4" value="{products>/onBoardingCount}" valueColor="Neutral" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile id="allTile" header="ALL" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent5">
+                                    <NumericContent id="_IDGenNumericContent5" value="{products>/allCount}" valueColor="Neutral" />
+                                </TileContent>
+                            </GenericTile>
+                        </l:content>
+                    </l:Grid>
+
+                    <!-- Filter Options -->
+                    <Toolbar id="filterToolbar">
+                        <Label id="supplierIdLabel" text="Supplier ID:" />
+                        <Input id="supplierIdInput" width="15%" placeholder="Supplier ID" change=".onSupplierIdChange" />
+                        <Label id="supplierTypeLabel" text="Supplier Type:" />
+                        <ComboBox id="supplierTypeComboBox" width="15%" placeholder="Select Type" selectionChange=".onSupplierTypeChange">
+                            <core:Item id="_IDGenItem1" key="All" text="All" />
+                            <core:Item id="_IDGenItem2" key="Direct" text="Direct" />
+                            <core:Item id="_IDGenItem3" key="Indirect" text="Indirect" />
+                        </ComboBox>
+                        <Label id="stageLabel" text="Stage:" />
+                        <ComboBox id="stageComboBox" width="15%" placeholder="Select Stage" selectionChange=".onStageChange">
+                            <core:Item id="_IDGenItem4" key="All" text="All" />
+                            <core:Item id="_IDGenItem5" key="SUPPLIER" text="SUPPLIER" />
+                            <core:Item id="_IDGenItem6" key="BUYER" text="BUYER" />
+                            <core:Item id="_IDGenItem7" key="ON BOARDING" text="ON BOARDING" />
+                        </ComboBox>
+                        <Label id="statusLabel" text="Status:" />
+                        <ComboBox id="statusComboBox" width="15%" placeholder="Select Status" selectionChange=".onStatusChange">
+                            <core:Item id="_IDGenItem8" key="All" text="All" />
+                            <core:Item id="_IDGenItem9" key="DRAFT" text="DRAFT" />
+                            <core:Item id="_IDGenItem10" key="APPROVED" text="APPROVED" />
+                            <core:Item id="_IDGenItem11" key="CANCELLED" text="CANCELLED" />
+                        </ComboBox>
+                        <ToolbarSpacer id="_IDGenToolbarSpacer" />
+                        <Button id="createNewSupplierButton" text="Create New Supplier Request" press=".onOrderPress" />
+                    </Toolbar>
+
+                    <!-- Table -->
+                    <Table
+                        id="productsTable"
+                        items="{products>/items}"
+                        width="auto"
+                        mode="SingleSelectLeft"
+                        selectionChange=".onTableSelectionChange">
+                        <headerToolbar>
+                            <Toolbar id="_IDGenToolbar">
+                                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                                <Button id="sortButton" icon="sap-icon://sort" press=".onSort" tooltip="Sort" />
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column id="_IDGenColumn">
+                                <header>
+                                    <Text id="supplierRequestIdHeader" text="Supplier Request ID" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn1">
+                                <header>
+                                    <Text id="supplierNameHeader" text="Supplier Name" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn2">
+                                <header>
+                                    <Text id="typeHeader" text="Type" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn3">
+                                <header>
+                                    <Text id="requestCreationDateHeader" text="Request Creation Date" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn4">
+                                <header>
+                                    <Text id="requestAgingHeader" text="Request Aging" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn5">
+                                <header>
+                                    <Text id="lastActionDateHeader" text="Last Action Date" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn6">
+                                <header>
+                                    <Text id="lastActionAgingHeader" text="Last Action Aging" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn7">
+                                <header>
+                                    <Text id="stageHeader" text="Stage" />
+                                </header>
+                            </Column>
+                            <Column id="_IDGenColumn8">
+                                <header>
+                                    <Text id="statusHeader" text="Status" />
+                                </header>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="_IDGenColumnListItem">
+                                <cells>
+                                    <Text id="_IDGenText1" text="{products>supplierRequestId}" />
+                                    <Text id="_IDGenText2" text="{products>supplierName}" />
+                                    <Text id="_IDGenText3" text="{products>type}" />
+                                    <Text id="_IDGenText4" text="{products>requestCreationDate}" />
+                                    <Text id="_IDGenText5" text="{products>requestAging}" />
+                                    <Text id="_IDGenText6" text="{products>lastActionDate}" />
+                                    <Text id="_IDGenText7" text="{products>lastActionAging}" />
+                                    <Text id="_IDGenText8" text="{products>stage}" />
+                                    <ObjectStatus id="_IDGenStatus" 
+                                        text="{products>status}" 
+                                        state="{= ${products>status} === 'APPROVED' ? 'Success' : ${products>status} === 'CANCELLED' ? 'Error' : 'None'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </l:VerticalLayout>
+            </Page>
+        </f:beginColumnPages>
+        <f:midColumnPages>
+            <Page id="detailPage" title="Request Details">
+                <l:VerticalLayout id="detailLayout" width="100%">
+                    <Text id="detailText" />
+                </l:VerticalLayout>
+            </Page>
+        </f:midColumnPages>
+    </f:FlexibleColumnLayout>
+</mvc:View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
