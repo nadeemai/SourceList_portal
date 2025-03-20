@@ -168,15 +168,12 @@ sap.ui.define([
                     { supplierRequestId: "R00000018", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "SUPPLIER", status: "PENDING" },
                     { supplierRequestId: "R00000017", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "DRAFT" },
                     { supplierRequestId: "R00000016", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "CANCELLED" },
-                    { supplierRequestId: "R00000016", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "CANCELLED" },
                     { supplierRequestId: "R00000015", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "VENDOR CREATED" },
-                    { supplierRequestId: "R00000014", supplierName: "ABC Pvt Ltd", type: "Indirect", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "CMDM UPDATE PENDING" },
-                    { supplierRequestId: "R00000013", supplierName: "ABC Pvt Ltd", type: "Indirect", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "FINANCE UPDATE PENDING" },
+                    { supplierRequestId: "R00000014", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "CMDM UPDATE PENDING" },
+                    { supplierRequestId: "R00000013", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "FINANCE UPDATE PENDING" },
                     { supplierRequestId: "R00000012", supplierName: "ABC Pvt Ltd", type: "Indirect", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "ON BOARDING", status: "PURCHASE APPROVAL PENDING" },
                     { supplierRequestId: "R00000011", supplierName: "ABC Pvt Ltd", type: "Indirect", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "DRAFT" },
-                    { supplierRequestId: "R00000010", supplierName: "ABC Pvt Ltd", type: "Indirect", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "APPROVED" },
                     { supplierRequestId: "R00000010", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "APPROVED" },
-                    { supplierRequestId: "R00000009", supplierName: "XYZ Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "DRAFT" },
                     { supplierRequestId: "R00000009", supplierName: "XYZ Pvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "10 Days", lastActionDate: "13-10-2024", lastActionAging: "15 Days", stage: "BUYER", status: "DRAFT" }
                 ],
                 draftCount: 0,
@@ -328,7 +325,49 @@ sap.ui.define([
         },
 
         onOrderPress: function () {
-            MessageToast.show("New Supplier Request created successfully!");
+            // Get the current model data
+            var oModel = this.getView().getModel("products");
+            var oData = oModel.getData();
+            var aItems = oData.items;
+
+            // Generate a new supplier request ID (increment the last ID)
+            var iLastId = parseInt(aItems[0].supplierRequestId.replace("R", ""), 10);
+            var sNewId = "R" + (iLastId + 1).toString().padStart(8, "0");
+
+            // Get today's date in the format DD-MM-YYYY
+            var oDate = new Date();
+            var sToday = oDate.getDate().toString().padStart(2, "0") + "-" + 
+                        (oDate.getMonth() + 1).toString().padStart(2, "0") + "-" + 
+                        oDate.getFullYear();
+
+            // Create a new supplier request
+            var oNewSupplier = {
+                supplierRequestId: sNewId,
+                supplierName: "New Supplier " + sNewId, // Example name
+                type: "Direct", // Default type
+                requestCreationDate: sToday,
+                requestAging: "0 Days", // New request, so aging is 0
+                lastActionDate: sToday,
+                lastActionAging: "0 Days", // New request, so aging is 0
+                stage: "SUPPLIER", // Default stage
+                status: "DRAFT" // Default status
+            };
+
+            // Add the new supplier to the items array
+            aItems.unshift(oNewSupplier); // Add to the beginning of the array
+
+            // Update the tile counts
+            this._updateTileCounts(oData);
+
+            // Update the model
+            oModel.setData(oData);
+
+            // Refresh the table binding to reflect the new data
+            var oTable = this.byId("productsTable");
+            oTable.getBinding("items").refresh();
+
+            // Show a success message
+            MessageToast.show("New Supplier Request " + sNewId + " created successfully!");
         },
 
         onClearPress: function () {
