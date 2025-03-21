@@ -90,7 +90,7 @@
                                             <core:CustomData key="columnKey" value="supplierRequestId"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox">
+                                            <HBox id="_IDGenHBox" alignItems="Center">
                                                 <Text id="supplierRequestIdHeader" text="Supplier Request ID" wrapping="true" />
                                                 <core:Icon id="sortIcon_supplierRequestId" src="sap-icon://sort-ascending" press=".onSortSupplierRequestId" tooltip="Sort Supplier Request ID" />
                                             </HBox>
@@ -102,7 +102,7 @@
                                             <core:CustomData key="columnKey" value="supplierName"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox1">
+                                            <HBox id="_IDGenHBox1" alignItems="Center">
                                                 <Text id="supplierNameHeader" text="Supplier Name" wrapping="true" />
                                                 <core:Icon id="sortIcon_supplierName" src="sap-icon://sort-ascending" press=".onSortSupplierName" tooltip="Sort Supplier Name" />
                                             </HBox>
@@ -114,7 +114,7 @@
                                             <core:CustomData key="columnKey" value="type"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox2">
+                                            <HBox id="_IDGenHBox2" alignItems="Center">
                                                 <Text id="typeHeader" text="Type" wrapping="true" />
                                                 <core:Icon id="sortIcon_type" src="sap-icon://sort-ascending" press=".onSortType" tooltip="Sort Type" />
                                             </HBox>
@@ -126,7 +126,7 @@
                                             <core:CustomData key="columnKey" value="requestCreationDate"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox3">
+                                            <HBox id="_IDGenHBox3" alignItems="Center">
                                                 <Text id="requestCreationDateHeader" text="Request Creation Date" wrapping="true" />
                                                 <core:Icon id="sortIcon_requestCreationDate" src="sap-icon://sort-ascending" press=".onSortRequestCreationDate" tooltip="Sort Request Creation Date" />
                                             </HBox>
@@ -138,7 +138,7 @@
                                             <core:CustomData key="columnKey" value="requestAging"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox4">
+                                            <HBox id="_IDGenHBox4" alignItems="Center">
                                                 <Text id="requestAgingHeader" text="Request Aging" wrapping="true" />
                                                 <core:Icon id="sortIcon_requestAging" src="sap-icon://sort-ascending" press=".onSortRequestAging" tooltip="Sort Request Aging" />
                                             </HBox>
@@ -150,7 +150,7 @@
                                             <core:CustomData key="columnKey" value="lastActionDate"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox5">
+                                            <HBox id="_IDGenHBox5" alignItems="Center">
                                                 <Text id="lastActionDateHeader" text="Last Action Date" wrapping="true" />
                                                 <core:Icon id="sortIcon_lastActionDate" src="sap-icon://sort-ascending" press=".onSortLastActionDate" tooltip="Sort Last Action Date" />
                                             </HBox>
@@ -162,7 +162,7 @@
                                             <core:CustomData key="columnKey" value="lastActionAging"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox6">
+                                            <HBox id="_IDGenHBox6" alignItems="Center">
                                                 <Text id="lastActionAgingHeader" text="Last Action Aging" wrapping="true" />
                                                 <core:Icon id="sortIcon_lastActionAging" src="sap-icon://sort-ascending" press=".onSortLastActionAging" tooltip="Sort Last Action Aging" />
                                             </HBox>
@@ -174,7 +174,7 @@
                                             <core:CustomData key="columnKey" value="stage"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox7">
+                                            <HBox id="_IDGenHBox7" alignItems="Center">
                                                 <Text id="stageHeader" text="Stage" wrapping="true" />
                                                 <core:Icon id="sortIcon_stage" src="sap-icon://sort-ascending" press=".onSortStage" tooltip="Sort Stage" />
                                             </HBox>
@@ -186,7 +186,7 @@
                                             <core:CustomData key="columnKey" value="status"/>
                                         </customData>
                                         <header>
-                                            <HBox id="_IDGenHBox8">
+                                            <HBox id="_IDGenHBox8" alignItems="Center">
                                                 <Text id="statusHeader" text="Status" wrapping="true" />
                                                 <core:Icon id="sortIcon_status" src="sap-icon://sort-ascending" press=".onSortStatus" tooltip="Sort Status" />
                                             </HBox>
@@ -197,7 +197,7 @@
                                     <ColumnListItem id="_IDGenColumnListItem">
                                         <cells>
                                             <Text id="_IDGenText1" text="{products>supplierRequestId}" />
-                                            <Text id="_IDGenText2" text="{products>supplierName}" />
+                                            <Text id="_IDGenText2" text="{products>supplierName}" wrapping="true" />
                                             <Text id="_IDGenText3" text="{products>type}" />
                                             <Text id="_IDGenText4" text="{products>requestCreationDate}" />
                                             <Text id="_IDGenText5" text="{products>requestAging}" />
@@ -218,7 +218,6 @@
         </f:beginColumnPages>
     </f:FlexibleColumnLayout>
 </mvc:View>
-
 
 
 
