@@ -215,7 +215,7 @@
                                             <Text id="_IDGenText8" text="{products>stage}" />
                                             <ObjectStatus id="_IDGenObjectStatus"
                                                 text="{products>status}"
-                                                state="{= ${products>status} === 'APPROVED' ? 'Success' : ${products>status} === 'CANCELLED' ? 'Error' : 'None'}" />
+                                                 state="{= ${products>status} === 'APPROVED' ? 'Success' : ${products>status} === 'VENDOR CREATED' ? 'Success' :  ${products>status} === 'FINANCE UPDATE PENDING' ? 'Warning' : ${products>status} === 'PENDING' ? 'Warning' :  ${products>status} === 'CMDM UPDATE PENDING' ? 'Warning' : ${products>status} === 'CANCELLED' ? 'Error' : 'None'}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
