@@ -43,31 +43,9 @@
                                 </l:content>
                             </l:Grid>
 
-                            <!-- Filter Options without Search Bar -->
-                            <Toolbar id="filterToolbar" class="sapUiSmallMargin">
-                                <Label id="supplierIdLabel" text="Supplier ID:" class="sapUiTinyMarginEnd" />
-                                <Input id="supplierIdInput" width="15%" placeholder="Enter Supplier ID" change=".onSupplierIdChange" />
-                                <Label id="supplierTypeLabel" text="Supplier Type:" class="sapUiTinyMarginEnd" />
-                                <ComboBox id="supplierTypeComboBox" width="15%" placeholder="Select Supplier Type" selectionChange=".onSupplierTypeChange">
-                                    <core:Item id="_IDGenItem1" key="All" text="All" />
-                                    <core:Item id="_IDGenItem2" key="Direct" text="Direct" />
-                                    <core:Item id="_IDGenItem3" key="Indirect" text="Indirect" />
-                                </ComboBox>
-                                <Label id="stageLabel" text="Stage:" class="sapUiTinyMarginEnd" />
-                                <ComboBox id="stageComboBox" width="15%" placeholder="Select Stage" selectionChange=".onStageChange">
-                                    <core:Item id="_IDGenItem4" key="All" text="All" />
-                                    <core:Item id="_IDGenItem5" key="SUPPLIER" text="Supplier" />
-                                    <core:Item id="_IDGenItem6" key="BUYER" text="Buyer" />
-                                    <core:Item id="_IDGenItem7" key="ON BOARDING" text="On Boarding" />
-                                </ComboBox>
-                                <Label id="statusLabel" text="Status:" class="sapUiTinyMarginEnd" />
-                                <ComboBox id="statusComboBox" width="15%" placeholder="Select Status" selectionChange=".onStatusChange">
-                                    <core:Item id="_IDGenItem8" key="All" text="All" />
-                                    <core:Item id="_IDGenItem9" key="DRAFT" text="Draft" />
-                                    <core:Item id="_IDGenItem10" key="APPROVED" text="Approved" />
-                                    <core:Item id="_IDGenItem11" key="CANCELLED" text="Cancelled" />
-                                </ComboBox>
-                                <ToolbarSpacer id="_IDGenToolbarSpacer" />
+                            <!-- Create New Supplier Request Button in a Separate Toolbar -->
+                            <Toolbar id="actionToolbar" class="sapUiSmallMargin">
+                                <ToolbarSpacer id="_IDGenToolbarSpacer2" />
                                 <Button id="createNewSupplierButton" text="Create New Supplier Request" press=".onOrderPress" type="Emphasized" />
                             </Toolbar>
 
@@ -79,8 +57,31 @@
                                 mode="None">
                                 <headerToolbar>
                                     <Toolbar id="_IDGenToolbar">
+                                        <!-- Filter Options Moved Here -->
+                                        <Label id="supplierIdLabel" text="Supplier ID:" class="sapUiTinyMarginEnd" />
+                                        <Input id="supplierIdInput" width="15%" placeholder="Enter Supplier ID" change=".onSupplierIdChange" />
+                                        <Label id="supplierTypeLabel" text="Supplier Type:" class="sapUiTinyMarginEnd" />
+                                        <ComboBox id="supplierTypeComboBox" width="15%" placeholder="Select Supplier Type" selectionChange=".onSupplierTypeChange">
+                                            <core:Item id="_IDGenItem1" key="All" text="All" />
+                                            <core:Item id="_IDGenItem2" key="Direct" text="Direct" />
+                                            <core:Item id="_IDGenItem3" key="Indirect" text="Indirect" />
+                                        </ComboBox>
+                                        <Label id="stageLabel" text="Stage:" class="sapUiTinyMarginEnd" />
+                                        <ComboBox id="stageComboBox" width="15%" placeholder="Select Stage" selectionChange=".onStageChange">
+                                            <core:Item id="_IDGenItem4" key="All" text="All" />
+                                            <core:Item id="_IDGenItem5" key="SUPPLIER" text="Supplier" />
+                                            <core:Item id="_IDGenItem6" key="BUYER" text="Buyer" />
+                                            <core:Item id="_IDGenItem7" key="ON BOARDING" text="On Boarding" />
+                                        </ComboBox>
+                                        <Label id="statusLabel" text="Status:" class="sapUiTinyMarginEnd" />
+                                        <ComboBox id="statusComboBox" width="15%" placeholder="Select Status" selectionChange=".onStatusChange">
+                                            <core:Item id="_IDGenItem8" key="All" text="All" />
+                                            <core:Item id="_IDGenItem9" key="DRAFT" text="Draft" />
+                                            <core:Item id="_IDGenItem10" key="APPROVED" text="Approved" />
+                                            <core:Item id="_IDGenItem11" key="CANCELLED" text="Cancelled" />
+                                        </ComboBox>
                                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                                        <Button id="resetSortButton" text="Reset Sort" press=".onResetSort" tooltip="Reset all sorting" />
+                                        <Button id="downloadButton" icon="sap-icon://download" press=".onDownloadPress" tooltip="Download table data as CSV" />
                                     </Toolbar>
                                 </headerToolbar>
                                 <columns>
