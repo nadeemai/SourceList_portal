@@ -13,7 +13,7 @@
                     <content>
                         <l:VerticalLayout id="_IDGenVerticalLayout" width="100%">
                             <!-- Launch Tiles -->
-                            <l:Grid id="tileGrid" defaultSpan="XL2 L2 M4 S6" hSpacing="1" vSpacing="1">
+                            <l:Grid id="tileGrid" defaultSpan="XL2 L2 M4 S6" hSpacing="1" vSpacing="1" class="centeredGrid">
                                 <l:content>
                                     <GenericTile id="draftTile" header="Draft" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
                                         <TileContent id="_IDGenTileContent1">
@@ -35,7 +35,7 @@
                                             <NumericContent id="_IDGenNumericContent4" value="{products>/onBoardingCount}" valueColor="Neutral" />
                                         </TileContent>
                                     </GenericTile>
-                                    <GenericTile id="allTile" header="ALL" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
+                                    <GenericTile id="allTile" header="All Requests" press=".onTilePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" frameType="OneByHalf">
                                         <TileContent id="_IDGenTileContent5">
                                             <NumericContent id="_IDGenNumericContent5" value="{products>/allCount}" valueColor="Neutral" />
                                         </TileContent>
@@ -43,32 +43,31 @@
                                 </l:content>
                             </l:Grid>
 
-                            <!-- Filter Options -->
-                            <Toolbar id="filterToolbar">
-                                <Label id="supplierIdLabel" text="Supplier ID:" />
-                                <Input id="supplierIdInput" width="15%" placeholder="Supplier ID" change=".onSupplierIdChange" />
-                                <Label id="supplierTypeLabel" text="Supplier Type:" />
-                                <ComboBox id="supplierTypeComboBox" width="15%" placeholder="Select Type" selectionChange=".onSupplierTypeChange">
+                            <!-- Filter Options without Search Bar -->
+                            <Toolbar id="filterToolbar" class="sapUiSmallMargin">
+                                <Label id="supplierIdLabel" text="Supplier ID:" class="sapUiTinyMarginEnd" />
+                                <Input id="supplierIdInput" width="15%" placeholder="Enter Supplier ID" change=".onSupplierIdChange" />
+                                <Label id="supplierTypeLabel" text="Supplier Type:" class="sapUiTinyMarginEnd" />
+                                <ComboBox id="supplierTypeComboBox" width="15%" placeholder="Select Supplier Type" selectionChange=".onSupplierTypeChange">
                                     <core:Item id="_IDGenItem1" key="All" text="All" />
                                     <core:Item id="_IDGenItem2" key="Direct" text="Direct" />
                                     <core:Item id="_IDGenItem3" key="Indirect" text="Indirect" />
                                 </ComboBox>
-                                <Label id="stageLabel" text="Stage:" />
+                                <Label id="stageLabel" text="Stage:" class="sapUiTinyMarginEnd" />
                                 <ComboBox id="stageComboBox" width="15%" placeholder="Select Stage" selectionChange=".onStageChange">
                                     <core:Item id="_IDGenItem4" key="All" text="All" />
-                                    <core:Item id="_IDGenItem5" key="SUPPLIER" text="SUPPLIER" />
-                                    <core:Item id="_IDGenItem6" key="BUYER" text="BUYER" />
-                                    <core:Item id="_IDGenItem7" key="ON BOARDING" text="ON BOARDING" />
+                                    <core:Item id="_IDGenItem5" key="SUPPLIER" text="Supplier" />
+                                    <core:Item id="_IDGenItem6" key="BUYER" text="Buyer" />
+                                    <core:Item id="_IDGenItem7" key="ON BOARDING" text="On Boarding" />
                                 </ComboBox>
-                                <Label id="statusLabel" text="Status:" />
+                                <Label id="statusLabel" text="Status:" class="sapUiTinyMarginEnd" />
                                 <ComboBox id="statusComboBox" width="15%" placeholder="Select Status" selectionChange=".onStatusChange">
                                     <core:Item id="_IDGenItem8" key="All" text="All" />
-                                    <core:Item id="_IDGenItem9" key="DRAFT" text="DRAFT" />
-                                    <core:Item id="_IDGenItem10" key="APPROVED" text="APPROVED" />
-                                    <core:Item id="_IDGenItem11" key="CANCELLED" text="CANCELLED" />
+                                    <core:Item id="_IDGenItem9" key="DRAFT" text="Draft" />
+                                    <core:Item id="_IDGenItem10" key="APPROVED" text="Approved" />
+                                    <core:Item id="_IDGenItem11" key="CANCELLED" text="Cancelled" />
                                 </ComboBox>
                                 <ToolbarSpacer id="_IDGenToolbarSpacer" />
-                                <Button id="clearButton" text="Clear" press=".onClearPress" type="Emphasized" />
                                 <Button id="createNewSupplierButton" text="Create New Supplier Request" press=".onOrderPress" type="Emphasized" />
                             </Toolbar>
 
@@ -81,123 +80,115 @@
                                 <headerToolbar>
                                     <Toolbar id="_IDGenToolbar">
                                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                                        <Button id="resetSortButton" text="Reset Sort" press=".onResetSort" tooltip="Reset all sorting" />
                                     </Toolbar>
                                 </headerToolbar>
                                 <columns>
-                                    <Column id="_IDGenColumn">
+                                    <!-- Supplier Request ID -->
+                                    <Column id="_IDGenColumn" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="supplierRequestId"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox">
-                                                <Text id="supplierRequestIdHeader" text="Supplier Request ID" />
-                                                <core:HTML id="_IDGenHTML" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton1" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Supplier Request ID">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="supplierRequestId" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="supplierRequestIdHeader" text="Supplier Request ID" wrapping="true" />
+                                                <core:Icon id="sortIcon_supplierRequestId" src="sap-icon://sort-ascending" press=".onSortSupplierRequestId" tooltip="Sort Supplier Request ID" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn1">
+                                    <!-- Supplier Name -->
+                                    <Column id="_IDGenColumn1" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="supplierName"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox1">
-                                                <Text id="supplierNameHeader" text="Supplier Name" />
-                                                <core:HTML id="_IDGenHTML1" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton2" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Supplier Name">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="supplierName" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="supplierNameHeader" text="Supplier Name" wrapping="true" />
+                                                <core:Icon id="sortIcon_supplierName" src="sap-icon://sort-ascending" press=".onSortSupplierName" tooltip="Sort Supplier Name" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn2">
+                                    <!-- Type -->
+                                    <Column id="_IDGenColumn2" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="type"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox2">
-                                                <Text id="typeHeader" text="Type" />
-                                                <core:HTML id="_IDGenHTML2" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton3" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Type">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="type" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="typeHeader" text="Type" wrapping="true" />
+                                                <core:Icon id="sortIcon_type" src="sap-icon://sort-ascending" press=".onSortType" tooltip="Sort Type" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn3">
+                                    <!-- Request Creation Date -->
+                                    <Column id="_IDGenColumn3" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="requestCreationDate"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox3">
-                                                <Text id="requestCreationDateHeader" text="Request Creation Date" />
-                                                <core:HTML id="_IDGenHTML3" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton4" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Request Creation Date">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="requestCreationDate" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="requestCreationDateHeader" text="Request Creation Date" wrapping="true" />
+                                                <core:Icon id="sortIcon_requestCreationDate" src="sap-icon://sort-ascending" press=".onSortRequestCreationDate" tooltip="Sort Request Creation Date" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn4">
+                                    <!-- Request Aging -->
+                                    <Column id="_IDGenColumn4" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="requestAging"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox4">
-                                                <Text id="requestAgingHeader" text="Request Aging" />
-                                                <core:HTML id="_IDGenHTML4" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton5" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Request Aging">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="requestAging" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="requestAgingHeader" text="Request Aging" wrapping="true" />
+                                                <core:Icon id="sortIcon_requestAging" src="sap-icon://sort-ascending" press=".onSortRequestAging" tooltip="Sort Request Aging" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn5">
+                                    <!-- Last Action Date -->
+                                    <Column id="_IDGenColumn5" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="lastActionDate"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox5">
-                                                <Text id="lastActionDateHeader" text="Last Action Date" />
-                                                <core:HTML id="_IDGenHTML5" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton6" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Last Action Date">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="lastActionDate" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="lastActionDateHeader" text="Last Action Date" wrapping="true" />
+                                                <core:Icon id="sortIcon_lastActionDate" src="sap-icon://sort-ascending" press=".onSortLastActionDate" tooltip="Sort Last Action Date" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn6">
+                                    <!-- Last Action Aging -->
+                                    <Column id="_IDGenColumn6" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="lastActionAging"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox6">
-                                                <Text id="lastActionAgingHeader" text="Last Action Aging" />
-                                                <core:HTML id="_IDGenHTML6" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton7" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Last Action Aging">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="lastActionAging" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="lastActionAgingHeader" text="Last Action Aging" wrapping="true" />
+                                                <core:Icon id="sortIcon_lastActionAging" src="sap-icon://sort-ascending" press=".onSortLastActionAging" tooltip="Sort Last Action Aging" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn7">
+                                    <!-- Stage -->
+                                    <Column id="_IDGenColumn7" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="stage"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox7">
-                                                <Text id="stageHeader" text="Stage" />
-                                                <core:HTML id="_IDGenHTML7" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton8" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Stage">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="stage" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="stageHeader" text="Stage" wrapping="true" />
+                                                <core:Icon id="sortIcon_stage" src="sap-icon://sort-ascending" press=".onSortStage" tooltip="Sort Stage" />
                                             </HBox>
                                         </header>
                                     </Column>
-                                    <Column id="_IDGenColumn8">
+                                    <!-- Status -->
+                                    <Column id="_IDGenColumn8" minScreenWidth="Tablet" demandPopin="true">
+                                        <customData>
+                                            <core:CustomData key="columnKey" value="status"/>
+                                        </customData>
                                         <header>
                                             <HBox id="_IDGenHBox8">
-                                                <Text id="statusHeader" text="Status" />
-                                                <core:HTML id="_IDGenHTML8" content="&lt;div style='width: 10px;'&gt;&lt;/div&gt;" />
-                                                <Button id="_IDGenButton9" icon="sap-icon://sort" press=".onSortColumn" tooltip="Sort Status">
-                                                    <customData>
-                                                        <core:CustomData key="sortField" value="status" />
-                                                    </customData>
-                                                </Button>
+                                                <Text id="statusHeader" text="Status" wrapping="true" />
+                                                <core:Icon id="sortIcon_status" src="sap-icon://sort-ascending" press=".onSortStatus" tooltip="Sort Status" />
                                             </HBox>
                                         </header>
                                     </Column>
@@ -206,7 +197,7 @@
                                     <ColumnListItem id="_IDGenColumnListItem">
                                         <cells>
                                             <Text id="_IDGenText1" text="{products>supplierRequestId}" />
-                                            <Text id="_IDGenText2" text="{products>supplierName}" />
+                                            <Text id="_IDGenText2" text="{products>supplierName}" wrapping="true" />
                                             <Text id="_IDGenText3" text="{products>type}" />
                                             <Text id="_IDGenText4" text="{products>requestCreationDate}" />
                                             <Text id="_IDGenText5" text="{products>requestAging}" />
@@ -215,7 +206,7 @@
                                             <Text id="_IDGenText8" text="{products>stage}" />
                                             <ObjectStatus id="_IDGenObjectStatus"
                                                 text="{products>status}"
-                                                 state="{= ${products>status} === 'APPROVED' ? 'Success' : ${products>status} === 'VENDOR CREATED' ? 'Success' :  ${products>status} === 'FINANCE UPDATE PENDING' ? 'Warning' : ${products>status} === 'PENDING' ? 'Warning' :  ${products>status} === 'CMDM UPDATE PENDING' ? 'Warning' : ${products>status} === 'CANCELLED' ? 'Error' : 'None'}" />
+                                                state="{= ${products>status} === 'APPROVED' ? 'Success' : ${products>status} === 'VENDOR CREATED' ? 'Success' : ${products>status} === 'FINANCE UPDATE PENDING' ? 'Warning' : ${products>status} === 'PENDING' ? 'Warning' : ${products>status} === 'CMDM UPDATE PENDING' ? 'Warning' : ${products>status} === 'CANCELLED' ? 'Error' : 'None'}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
@@ -227,6 +218,7 @@
         </f:beginColumnPages>
     </f:FlexibleColumnLayout>
 </mvc:View>
+
 
 
 
