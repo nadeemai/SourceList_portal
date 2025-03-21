@@ -12,8 +12,7 @@ sap.ui.define([
     return Controller.extend("com.tableentry.tablestructure.controller.Table_Entry", {
         onInit: function () {
             var oData = {
-                items: [
-
+               items: [
                     { supplierRequestId: "R00000019", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-01-2024", requestAging: "10 Days", lastActionDate: "11-10-2024", lastActionAging: "15 Days", stage: "SUPPLIER", status: "PENDING" },
                     { supplierRequestId: "R00000018", supplierName: "XYZ Pvt Ltd", type: "Indirect", requestCreationDate: "12-02-2024", requestAging: "20 Days", lastActionDate: "12-10-2024", lastActionAging: "20 Days", stage: "SUPPLIER", status: "PENDING" },
                     { supplierRequestId: "R00000017", supplierName: "ABC Pvt Ltd", type: "Direct", requestCreationDate: "12-03-2024", requestAging: "30 Days", lastActionDate: "13-10-2024", lastActionAging: "30 Days", stage: "BUYER", status: "DRAFT" },
@@ -25,6 +24,7 @@ sap.ui.define([
                     { supplierRequestId: "R00000011", supplierName: "XYZ Pvt Ltd", type: "Indirect", requestCreationDate: "12-109-2024", requestAging: "90 Days", lastActionDate: "19-10-2024", lastActionAging: "45 Days", stage: "BUYER", status: "DRAFT" },
                     { supplierRequestId: "R00000010", supplierName: "XYZPvt Ltd", type: "Direct", requestCreationDate: "12-10-2024", requestAging: "100 Days", lastActionDate: "20-10-2024", lastActionAging: "75 Days", stage: "BUYER", status: "APPROVED" },
                     { supplierRequestId: "R00000009", supplierName: "XYZ Pvt Ltd", type: "Direct", requestCreationDate: "12-11-2024", requestAging: "110 Days", lastActionDate: "21-10-2024", lastActionAging: "65 Days", stage: "BUYER", status: "DRAFT" }
+
                 ],
                 draftCount: 0,
                 myPendingCount: 0,
@@ -119,9 +119,9 @@ sap.ui.define([
         },
 
         _agingComparator: function (a, b) {
-            var numA = parseInt(a.split(" ")[0], 10);
-            var numB = parseInt(b.split(" ")[0], 10);
-            return numA - numB;
+            var aDays = parseInt(a.split(" ")[0], 10) || 0;
+            var bDays = parseInt(b.split(" ")[0], 10) || 0;
+            return aDays - bDays;
         },
 
         onTilePress: function (oEvent) {
@@ -202,7 +202,6 @@ sap.ui.define([
         }
     });
 });
-
 
 
 
