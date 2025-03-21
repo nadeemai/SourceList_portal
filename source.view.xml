@@ -197,7 +197,7 @@
                                     <ColumnListItem id="_IDGenColumnListItem">
                                         <cells>
                                             <Text id="_IDGenText1" text="{products>supplierRequestId}" />
-                                            <Text id="_IDGenText2" text="{products>supplierName}" wrapping="true" />
+                                            <Text id="_IDGenText2" text="{products>supplierName}" />
                                             <Text id="_IDGenText3" text="{products>type}" />
                                             <Text id="_IDGenText4" text="{products>requestCreationDate}" />
                                             <Text id="_IDGenText5" text="{products>requestAging}" />
@@ -218,7 +218,6 @@
         </f:beginColumnPages>
     </f:FlexibleColumnLayout>
 </mvc:View>
-
 
 
 
