@@ -81,7 +81,7 @@
                                             <core:Item id="_IDGenItem11" key="CANCELLED" text="Cancelled" />
                                         </ComboBox>
                                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                                        <Button id="downloadButton" icon="sap-icon://download" press=".onDownloadPress" tooltip="Download table data as CSV" />
+                                        <Button id="downloadButton" icon="sap-icon://download" press=".onDownloadPress" tooltip="Download table data as CSV" type="Emphasized" />
                                     </Toolbar>
                                 </headerToolbar>
                                 <columns>
@@ -219,7 +219,6 @@
         </f:beginColumnPages>
     </f:FlexibleColumnLayout>
 </mvc:View>
-
 
 
 
